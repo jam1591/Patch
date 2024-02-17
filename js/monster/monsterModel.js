@@ -35,7 +35,7 @@ function monsterModel(database) {
                                                         utilities.relativeSquareCenter(player.y, player.h, 7)),
                     speed: 3,
                     sprite: {
-                        sheet: "/img/Sprite-0005.png",
+                        sheet: "img/Sprite-0005.png",
                         frameWidth: 10,
                         frameHeight: 10,
                         totalFrames: 6,

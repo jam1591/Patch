@@ -36,7 +36,7 @@ const animSpeed = 16;
 //Actors
 const userInterface = new UserInterface();
 const utilities = new Utilities();
-const player = new PlayerModel(utilities.relativeSquareCenter(0, WIDTH, 25), utilities.relativeSquareCenter(0, HEIGHT, 25), 50, 50, "lightgray", 1, "/img/Sprite-0003.png");
+const player = new PlayerModel(utilities.relativeSquareCenter(0, WIDTH, 25), utilities.relativeSquareCenter(0, HEIGHT, 25), 50, 50, "lightgray", 1, "img/Sprite-0003.png");
 
 
 //Monster numbers for each round.
@@ -56,7 +56,7 @@ const monsterDatabase = [
     {
         id: 0,
         sprite: {
-            sheet: "/img/Sprite-0002.png",
+            sheet: "img/Sprite-0002.png",
             frameWidth: 48,
             frameHeight: 26,
             totalFrames: 6,
@@ -76,7 +76,7 @@ const monsterDatabase = [
     {
         id: 1,
         sprite: {
-            sheet: "/img/Sprite-0001.png",
+            sheet: "img/Sprite-0001.png",
             frameWidth: 48,
             frameHeight: 48,
             totalFrames: 6,
@@ -97,7 +97,7 @@ const monsterDatabase = [
     {
         id: 2,
         sprite: {
-            sheet: "/img/Sprite-0006.png",
+            sheet: "img/Sprite-0006.png",
             frameWidth: 80,
             frameHeight: 80,
             totalFrames: 10,
@@ -197,7 +197,7 @@ function renderCanvas() {
 
     //Draw map
     const mapBackground = new Image();
-    mapBackground.src = "/img/map.png";
+    mapBackground.src = "img/map.png";
     ctx.drawImage(mapBackground, 0, 0);
 }
 
@@ -235,16 +235,16 @@ document.addEventListener("keydown", function (e) {
 
     switch (e.key) {
         case 'ArrowUp':
-            bullets.push(new Bullet(player.x, player.y, "ArrowUp", "/img/Sprite-0004.png"));
+            bullets.push(new Bullet(player.x, player.y, "ArrowUp", "img/Sprite-0004.png"));
             break;
         case 'ArrowDown':
-            bullets.push(new Bullet(player.x, player.y, "ArrowDown", "/img/Sprite-0004.png"));
+            bullets.push(new Bullet(player.x, player.y, "ArrowDown", "img/Sprite-0004.png"));
             break; 
         case 'ArrowLeft':
-            bullets.push(new Bullet(player.x, player.y, "ArrowLeft", "/img/Sprite-0004.png"));
+            bullets.push(new Bullet(player.x, player.y, "ArrowLeft", "img/Sprite-0004.png"));
             break; 
         case 'ArrowRight':
-            bullets.push(new Bullet(player.x, player.y, "ArrowRight", "/img/Sprite-0004.png"));
+            bullets.push(new Bullet(player.x, player.y, "ArrowRight", "img/Sprite-0004.png"));
             break;
     }
 });

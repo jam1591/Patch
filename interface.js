@@ -117,7 +117,7 @@ UserInterface.prototype.skills = function(){
     const textWidth = ctx.measureText(`${player.teleportCooldownRemaining/1000} sec`).width;
 
     const image = new Image();
-    image.src = "/img/teleport.png"
+    image.src = "img/teleport.png"
 
     if(player.teleportCooldownRemaining == 3000 ) {
         ctx.fillStyle = "black";
