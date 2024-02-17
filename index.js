@@ -202,7 +202,7 @@ function renderCanvas() {
 }
 
 function renderUserInterface() {
-    //userInterface.instructions();
+    userInterface.instructions();
     userInterface.rounds();
     userInterface.kills();
     userInterface.skills();
