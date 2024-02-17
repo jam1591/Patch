@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link href="styles.css" type="stylesheet" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
+
+    body {
+      background-color: rgb(0, 0, 0);   
+     }
+
+    canvas {
+      background-color: rgb(116, 118, 129);
+      position: absolute;
+      top: 50%;
+      font-family: "Dosis", sans-serif;
+      left: 50%;
+      border-radius: 1em;
+      transform: translate(-50%, -50%);
+      border: 2px solid #000000;
+    }
+
+    #menu {
+      background-color: #000000;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      border-radius: 1em;
+      color: #fff;
+      text-align: center;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #menu hr {
+      color: #ffffff;
+      border: none;
+    }
+
+    #title {
+      font-size: 40px;
+      font-family: "Dosis", sans-serif;
+    }
+
+    #nextRound, #restart {
+      display: block;
+      margin: 10px auto;
+      padding: 15px 30px;
+      background-color: #000000;
+      color: #fff;
+      border: 2px solid #fff;
+      cursor: pointer;
+      font-family: "Dosis", sans-serif;
+      font-size: 28px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease;
+      outline: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #nextRound:hover, #restart:hover {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+
+  </style>
+</head>
+
+<body>
+
+  <div id="game">
+    <canvas id="myCanvas"></canvas>
+  </div>
+  
+  <script src="utilities.js"></script>
+  <script src="interface.js"></script>
+
+  <script src="/js/player/playerModel.js"></script>
+  <script src="/js/player/playerActions.js"></script>
+  <script src="/js/bullet/bulletModel.js"></script>
+  <script src="/js/bullet/bulletActions.js"></script>
+
+  <script src="/js/monster/monsterSkill.js"></script>
+  <script src="/js/monster/monsterModel.js"></script>
+  <script src="/js/monster/monsterAdd.js"></script>
+  <script src="/js/monster/monsterOffset.js"></script>
+  <script src="/js/monster/monsterCollision.js"></script>
+  
+  <script src="index.js"></script>
+
+</body>
+
+</html>
