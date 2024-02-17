@@ -6,7 +6,7 @@ This project is a simple game developed using HTML5 Canvas and JavaScript. It fe
 
 - [Usage](#usage)
 - [Documentation](#documentation)
-  - [Functions](#functions)
+- [Functions](#functions)
 - [License](#license)
 
 ## Usage
