@@ -8,70 +8,76 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
 
-    body {
+    body 
+    {
       background-color: rgb(0, 0, 0);
     }
 
-    canvas {
-      background-color: rgb(116, 118, 129);
-      position: absolute;
-      top: 50%;
-      font-family: "Dosis", sans-serif;
-      left: 50%;
-      border-radius: 1em;
-      transform: translate(-50%, -50%);
-      border: 2px solid #000000;
-    }
+      canvas 
+      {
+        background-color: rgb(116, 118, 129);
+        position: absolute;
+        top: 50%;
+        font-family: "Dosis", sans-serif;
+        left: 50%;
+        border-radius: 1em;
+        transform: translate(-50%, -50%);
+        border: 2px solid #000000;
+      }
 
-    #menu {
-      background-color: #000000;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-      border-radius: 1em;
-      color: #fff;
-      text-align: center;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-    }
+      #menu 
+      {
+        background-color: #000000;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        border-radius: 1em;
+        color: #fff;
+        text-align: center;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+      }
 
-    #menu hr {
-      color: #ffffff;
-      border: none;
-    }
+        #menu hr 
+        {
+          color: #ffffff;
+          border: none;
+        }
 
-    #title {
-      font-size: 40px;
-      font-family: "Dosis", sans-serif;
-    }
+        #title {
+          font-size: 40px;
+          font-family: "Dosis", sans-serif;
+        }
 
-    #nextRound,
-    #restart {
-      display: block;
-      margin: 10px auto;
-      padding: 15px 30px;
-      background-color: #000000;
-      color: #fff;
-      border: 2px solid #fff;
-      cursor: pointer;
-      font-family: "Dosis", sans-serif;
-      font-size: 28px;
-      font-weight: bold;
-      text-transform: uppercase;
-      transition: background-color 0.3s ease;
-      outline: none;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+        #nextRound,
+        #restart 
+        {
+          display: block;
+          margin: 10px auto;
+          padding: 15px 30px;
+          background-color: #000000;
+          color: #fff;
+          border: 2px solid #fff;
+          cursor: pointer;
+          font-family: "Dosis", sans-serif;
+          font-size: 28px;
+          font-weight: bold;
+          text-transform: uppercase;
+          transition: background-color 0.3s ease;
+          outline: none;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-    #nextRound:hover,
-    #restart:hover {
-      background-color: #ffffff;
-      color: #000000;
-    }
+          #nextRound:hover,
+          #restart:hover 
+          {
+            background-color: #ffffff;
+            color: #000000;
+          }
 
     #author {
       display: flex;
@@ -82,15 +88,17 @@
       font-family: "Dosis", sans-serif;
     }
 
-    #author a {
-      text-decoration: none;
-      color: inherit;
-    }
+      #author a 
+      {
+        text-decoration: none;
+        color: inherit;
+      }
 
-    #author a:hover {
-      text-decoration: none;
-      color: inherit;
-    }
+      #author a:hover 
+      {
+        text-decoration: none;
+        color: inherit;
+      }
 
   </style>
 </head>
@@ -99,28 +107,29 @@
 
   <div id="game">
     <canvas id="myCanvas"></canvas>
-
     <div id="author">
       <a href="https://www.youtube.com/watch?v=oavMtUWDBTM">@jam1591 : 2024-02-17</a>
     </div>
   </div>
 
-
-
-  <script src="utilities.js"></script>
-  <script src="interface.js"></script>
-
+  <script src="/js/static/utilities.js"></script>
+  <script src="/js/static//interface.js"></script>
+  <!-- Player -->
   <script src="js/player/playerModel.js"></script>
   <script src="js/player/playerActions.js"></script>
+
+  <!-- Player Bullet-->
   <script src="js/bullet/bulletModel.js"></script>
   <script src="js/bullet/bulletActions.js"></script>
+
+  <!-- Monster -->
   <script src="js/monster/monsterSkill.js"></script>
   <script src="js/monster/monsterModel.js"></script>
-  <script src="js/monster/monsterAdd.js"></script>
-  <script src="js/monster/monsterOffset.js"></script>
-  <script src="js/monster/monsterCollision.js"></script>
-
+  <script src="js/monster/monsterActions.js"></script>
+  
+  <!-- Program Run-->
   <script src="index.js"></script>
+  <script src="animation.js"></script>
 
 </body>
 
