@@ -70,8 +70,8 @@
   - `ArrowDown`: Fires a bullet downwards.
   - `ArrowLeft`: Fires a bullet to the left.
   - `ArrowRight`: Fires a bullet to the right.
-  - `W`: Moves player upwards.
-  - `S`: Moves player downwards.
-  - `A`: Moves player the left.
-  - `D`: Moves player to the right.
-  - `Space`: Teleport player in a certain direction.
+  - `W`: Moves a player upwards.
+  - `S`: Moves a player downwards.
+  - `A`: Moves a player the left.
+  - `D`: Moves a player to the right.
+  - `Space`: Teleport a player in a certain direction.
