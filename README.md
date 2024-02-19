@@ -70,7 +70,8 @@
   - `ArrowDown`: Fires a bullet downwards.
   - `ArrowLeft`: Fires a bullet to the left.
   - `ArrowRight`: Fires a bullet to the right.
-
-### Keyup Event Listener
-
-- **Description**: Listens for keyup events to stop player movement.
+  - `W`: Moves player upwards.
+  - `S`: Moves player downwards.
+  - `A`: Moves player the left.
+  - `D`: Moves player to the right.
+  - `Space`: Teleport player in a certain direction.
