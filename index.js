@@ -16,11 +16,13 @@ const bullets = [];
 let swarmIntervalId;
 let archerIntervalId;
 let tankIntervalId;
+let bossIntervalId;
 let animationId;
 
 let swarmKillCount = 0;
 let archerKillCount = 0;
 let tankkillCount = 0;
+let bosskillCount = 0;
 
 let pauseGame = true;
 
@@ -37,16 +39,18 @@ const player = new PlayerModel(
     50, 
     50, 
     "lightgray", 
-    1, 
+    1.2, 
     "img/Sprite-0003.png");
 
 let rounds = []
+
 for (let i = 0; i < 5; i++) 
 {
-    const swarm = utilities.getRandomNumber(10, 20);
-    const archer = utilities.getRandomNumber(1, 5);
-    const tank = utilities.getRandomNumber(1, 5);
-    const boss = 0;
+    const swarm = utilities.getRandomNumber(10, 15);
+    const archer = utilities.getRandomNumber(1, 3);
+    const tank = utilities.getRandomNumber(1, 3);
+    const boss = utilities.getRandomNumber(0, 2);
+
     const array = [swarm, archer, tank, boss];
     rounds.push(array);
 };
@@ -97,14 +101,15 @@ const monsterDatabase = [
     },
     {
         id: 3,
-        hp: 20,
+        sprite: { sheet: "img/Sprite-0008.png", frameWidth: 150, frameHeight: 150, totalFrames: 9, currentFrameIndex: 0},
+        hp: 25,
         label: "Boss",
-        speed: 1.5,
+        speed: 0.8,
         c: "purple",
-        w: 150,
-        h: 150,
-        rate: 10000,
-        func: [monsterFireArrow, monsterBigger, monsterMovement],
+        w: 100,
+        h: 100,
+        rate: 8000,
+        func: [monsterFireArrow,monsterMovement],
         limit: rounds[0][3]
     }];
     
@@ -116,6 +121,9 @@ archerImage.src = monsterDatabase[1].sprite.sheet;
 
 let tankImage =  new Image();
 tankImage.src = monsterDatabase[2].sprite.sheet;
+
+let bossImage =  new Image();
+bossImage.src = monsterDatabase[3].sprite.sheet;
 
 const mapBackground = new Image();
 mapBackground.src = "img/map.png";

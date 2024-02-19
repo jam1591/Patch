@@ -80,11 +80,12 @@ UserInterface.prototype.rounds = function()
 UserInterface.prototype.kills = function()
 {
     let locations = [
-        {image: swarmImage, x: 50, y: 60, w: 45, h: 45, killCount: swarmKillCount},
-        {image: archerImage, x: 100, y: 110, w: 45, h: 45, killCount: archerKillCount},
-        {image: tankImage, x: 150, y: 160, w: 45, h: 45, killCount: tankkillCount}];
+        {image: swarmImage, x: 50, y: 50, w: 45, h: 45, killCount: swarmKillCount},
+        {image: archerImage, x: 100, y: 100, w: 45, h: 45, killCount: archerKillCount},
+        {image: tankImage, x: 150, y: 150, w: 45, h: 45, killCount: tankkillCount},
+        {image: bossImage, x: 200, y: 200, w: 45, h: 45, killCount: bosskillCount}];
 
-    for (let i = 0; i < 3; i++) 
+    for (let i = 0; i < 4; i++) 
     {
         const monster = monsterDatabase[i];
 
@@ -129,34 +130,34 @@ UserInterface.prototype.skills = function()
 
 UserInterface.prototype.healthbar = function()
 {
-        const healthBarX = WIDTH * 0.01;
-        const healthBarY = HEIGHT * 0.01;
+    const healthBarX = WIDTH * 0.01;
+    const healthBarY = HEIGHT * 0.01;
 
-        const healthBarHeight = 30;
-        const redHealthBarWidth = player.hp*2;
-    
-        const gradient = ctx.createLinearGradient(healthBarX, healthBarY, healthBarX + redHealthBarWidth,healthBarHeight);
-        gradient.addColorStop(1, "rgba(255, 255, 255, 0.2)");
-        gradient.addColorStop(0, "rgba(0, 0, 0, 0.1)");
-        ctx.fillStyle = gradient;
-    
-        utilities.drawSquare(healthBarX-2, healthBarY-2, player.hpMax*2+4, healthBarHeight+4, "black", false);
-        utilities.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, "red", false);
-    
-        utilities.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, gradient, false);
-    
-        ctx.fillStyle = "black";
-        ctx.font = '25px Dosis';
-        ctx.fillText("LIFE", healthBarX, healthBarY+25);   
+    const healthBarHeight = 30;
+    const redHealthBarWidth = player.hp*2;
+
+    const gradient = ctx.createLinearGradient(healthBarX, healthBarY, healthBarX + redHealthBarWidth,healthBarHeight);
+    gradient.addColorStop(1, "rgba(255, 255, 255, 0.2)");
+    gradient.addColorStop(0, "rgba(0, 0, 0, 0.1)");
+    ctx.fillStyle = gradient;
+
+    utilities.drawSquare(healthBarX-2, healthBarY-2, player.hpMax*2+4, healthBarHeight+4, "black", false);
+    utilities.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, "red", false);
+
+    utilities.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, gradient, false);
+
+    ctx.fillStyle = "black";
+    ctx.font = '25px Dosis';
+    ctx.fillText("LIFE", healthBarX, healthBarY+25);   
 };
 
 function flagMonstersDefeated() 
 {
     return monsterDatabase[0].limit == 0 &&
-            monsterDatabase[1].limit == 0 &&
-            monsterDatabase[2].limit == 0 &&
-            monsterDatabase[3].limit == 0 &&
-            monsterActive.length == 0;
+        monsterDatabase[1].limit == 0 &&
+        monsterDatabase[2].limit == 0 &&
+        monsterDatabase[3].limit == 0 &&
+        monsterActive.length == 0;
 };
 
 function htmlInsertDiv(h1Value, buttonId, buttonValue) 

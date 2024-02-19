@@ -68,6 +68,7 @@ function monsterGenerate()
     swarmIntervalId = monsterAdd(monsterDatabase[0]);
     archerIntervalId = monsterAdd(monsterDatabase[1]);
     tankIntervalId = monsterAdd(monsterDatabase[2]);
+    bossIntervalId = monsterAdd(monsterDatabase[3]);
 };
 
 function monsterStopGenerate()
@@ -75,6 +76,7 @@ function monsterStopGenerate()
     clearInterval(swarmIntervalId);
     clearInterval(archerIntervalId);
     clearInterval(tankIntervalId);
+    clearInterval(bossIntervalId);
 };
 
 setInterval(userInterface.next, 16);
