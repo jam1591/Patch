@@ -1,7 +1,5 @@
-//Div that contains game canvas.
 const game = document.querySelector('#game');
 
-//Canvas stuff.
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext('2d');
 const WIDTH = canvas.width = 1000;
@@ -11,7 +9,6 @@ const HEIGHT = canvas.height = 1000;
 let button;
 let menu;
 
-//Lists to store game data.
 const monsterActive = [];
 const bullets = [];
 
@@ -25,10 +22,8 @@ let swarmKillCount = 0;
 let archerKillCount = 0;
 let tankkillCount = 0;
 
-//While true canvas will continue to render.
 let pauseGame = true;
 
-//Animation and round counters.
 let frameCount = 0;
 let roundCount = 0;
 const animSpeed = 16;
@@ -36,32 +31,30 @@ const animSpeed = 16;
 //Actors
 const userInterface = new UserInterface();
 const utilities = new Utilities();
-const player = new PlayerModel(utilities.relativeSquareCenter(0, WIDTH, 25), utilities.relativeSquareCenter(0, HEIGHT, 25), 50, 50, "lightgray", 1, "img/Sprite-0003.png");
+const player = new PlayerModel(
+    utilities.relativeSquareCenter(0, WIDTH, 25), 
+    utilities.relativeSquareCenter(0, HEIGHT, 25), 
+    50, 
+    50, 
+    "lightgray", 
+    1, 
+    "img/Sprite-0003.png");
 
-
-//Monster numbers for each round.
-let rounds = [];
-
-for (let i = 0; i < 5; i++) {
+let rounds = []
+for (let i = 0; i < 5; i++) 
+{
     const swarm = utilities.getRandomNumber(10, 20);
     const archer = utilities.getRandomNumber(1, 5);
     const tank = utilities.getRandomNumber(1, 5);
     const boss = 0;
     const array = [swarm, archer, tank, boss];
     rounds.push(array);
-}
+};
 
-//Monster database.
 const monsterDatabase = [
     {
         id: 0,
-        sprite: {
-            sheet: "img/Sprite-0002.png",
-            frameWidth: 48,
-            frameHeight: 26,
-            totalFrames: 6,
-            currentFrameIndex: 0
-        },
+        sprite: { sheet: "img/Sprite-0002.png", frameWidth: 48, frameHeight: 26, totalFrames: 6, currentFrameIndex: 0},
         label: "Swarm",
         speed: 0.8,
         hp: 8,
@@ -75,13 +68,7 @@ const monsterDatabase = [
     },
     {
         id: 1,
-        sprite: {
-            sheet: "img/Sprite-0001.png",
-            frameWidth: 48,
-            frameHeight: 48,
-            totalFrames: 6,
-            currentFrameIndex: 0
-        },
+        sprite: { sheet: "img/Sprite-0001.png", frameWidth: 48, frameHeight: 48, totalFrames: 6, currentFrameIndex: 0},
         hp:
             8,
         hpMax: 8,
@@ -96,13 +83,7 @@ const monsterDatabase = [
     },
     {
         id: 2,
-        sprite: {
-            sheet: "img/Sprite-0006.png",
-            frameWidth: 80,
-            frameHeight: 80,
-            totalFrames: 10,
-            currentFrameIndex: 0
-        },
+        sprite: { sheet: "img/Sprite-0006.png", frameWidth: 80, frameHeight: 80, totalFrames: 10, currentFrameIndex: 0},
         hp: 15,
         hpMax: 15,
         label: "Tank",
@@ -125,130 +106,19 @@ const monsterDatabase = [
         rate: 10000,
         func: [monsterFireArrow, monsterBigger, monsterMovement],
         limit: rounds[0][3]
-    }
-]
+    }];
+    
+let swarmImage=  new Image();
+swarmImage.src = monsterDatabase[0].sprite.sheet;
 
-function renderMonsters() {
-    monsterActive.forEach(function (monster) {
+let archerImage = new Image();
+archerImage.src = monsterDatabase[1].sprite.sheet;
 
-        if (frameCount % animSpeed == 0) {
-            monster.sprite.currentFrameIndex = (monster.sprite.currentFrameIndex + 1) % monster.sprite.totalFrames;
-        }
+let tankImage =  new Image();
+tankImage.src = monsterDatabase[2].sprite.sheet;
 
-        if (monster.hp <= 0) {
-            utilities.removeObject(monster, monsterActive);
-            switch (monster.id) {
-                case 0:
-                    swarmKillCount++;
-                    break;
-                case 1:
-                    archerKillCount++;
-                    break;
-                case 2:
-                    tankkillCount++;
-                    break;
-            }
+const mapBackground = new Image();
+mapBackground.src = "img/map.png";
 
-            return;
-        }
-
-        monsterOffset(monster);
-        monsterCollision(monster);
-
-        //Monster skills.
-        for (let i = 0; i < monster.func.length; i++) {
-            monster.func[i](monster);
-        }
-
-        //Draw monster.
-        utilities.drawImage(
-            monster.sprite.image,
-            monster.sprite.currentFrameIndex * monster.sprite.frameWidth,
-            0,
-            monster.sprite.frameWidth,
-            monster.sprite.frameHeight,
-            monster.x,
-            monster.y,
-            monster.w,
-            monster.h
-        );
-    })
-}
-
-function renderBullets() {
-    bullets.forEach(bullet => {
-        bullet.animation();
-        bullet.movement();
-        bullet.outOfBounds();
-        bullet.draw();
-    });
-}
-
-function renderPlayer() {
-    player.playerMovement();
-    player.playerMovementTeleport();
-    player.animation();
-    player.updateHealth();
-    player.draw();
-}
-
-function renderCanvas() {
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-
-    //Draw map
-    const mapBackground = new Image();
-    mapBackground.src = "img/map.png";
-    ctx.drawImage(mapBackground, 0, 0);
-}
-
-function renderUserInterface() {
-    userInterface.instructions();
-    userInterface.rounds();
-    userInterface.kills();
-    userInterface.skills();
-    userInterface.healthbar();
-}
-
-function animate() {
-
-    if (pauseGame) {
-        renderCanvas();
-        renderPlayer();
-        renderMonsters();
-        renderBullets();
-        renderUserInterface();
-    }
-
-    frameCount++;
-    animationId = requestAnimationFrame(animate);
-}
-
-monsterGenerate();
-animate();
-
-setInterval(userInterface.next, 16);
-setInterval(userInterface.win, 16);
-setInterval(userInterface.lose, 16);
-
-document.addEventListener("keydown", function (e) {
-    player.playerEventMovement(e, true);
-
-    switch (e.key) {
-        case 'ArrowUp':
-            bullets.push(new Bullet(player.x, player.y, "ArrowUp", "img/Sprite-0004.png"));
-            break;
-        case 'ArrowDown':
-            bullets.push(new Bullet(player.x, player.y, "ArrowDown", "img/Sprite-0004.png"));
-            break; 
-        case 'ArrowLeft':
-            bullets.push(new Bullet(player.x, player.y, "ArrowLeft", "img/Sprite-0004.png"));
-            break; 
-        case 'ArrowRight':
-            bullets.push(new Bullet(player.x, player.y, "ArrowRight", "img/Sprite-0004.png"));
-            break;
-    }
-});
-
-document.addEventListener("keyup", function (e) {
-    player.playerEventMovement(e, false);
-});
+const image = new Image();
+image.src = "img/teleport.png";
