@@ -70,7 +70,7 @@ Utilities.prototype.drawSquare = function (x, y, width, height, color, bool = fa
         ctx.shadowColor = color;
         ctx.shadowBlur = 5;
     };
-    
+
     ctx.fillStyle = color;
     ctx.fillRect(x, y, width, height);
 };
@@ -107,7 +107,6 @@ Utilities.prototype.drawImageOpacity = function (monster, opacity)
 {
     ctx.shadowColor = "black";
     ctx.shadowBlur = 2;
-
     ctx.globalAlpha = opacity;
 
     ctx.drawImage(
@@ -129,5 +128,6 @@ Utilities.prototype.getRandomNumber = function(min, max)
 {
     const random = Math.random();
     const scaled = random * (max - min + 1) + min;
+    
     return Math.floor(scaled);
 };

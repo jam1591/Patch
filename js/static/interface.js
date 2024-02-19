@@ -3,11 +3,31 @@ function UserInterface()
 
 };
 
+UserInterface.prototype.start = function() 
+{
+    if (!MENU && !START_GAME) 
+    {
+        PAUSE_GAME = true;
+        htmlInsertDiv("WELCOME", "start", "START GAME");
+
+        BUTTON.addEventListener('click', () => 
+        {
+            START_GAME = true;
+            PAUSE_GAME = false;
+            MENU.parentNode.removeChild(MENU);
+            MENU = null;
+            monsterGenerate();
+            animate();
+        });
+    };
+};
+
 UserInterface.prototype.next = function() 
 {
-    if (flagMonstersDefeated() && !MENU && ROUNDS.length > 1) 
+    if (flagMonstersDefeated() && !MENU && ROUNDS.length > 1 && START_GAME) 
     {
-        PAUSE_GAME = false;
+        PAUSE_GAME = true;
+        
         monsterStopGenerate();
 
         ROUNDS.shift();
@@ -15,13 +35,13 @@ UserInterface.prototype.next = function()
         DATABASE_MONSTERS[1].limit = ROUNDS[0][1];
         DATABASE_MONSTERS[2].limit = ROUNDS[0][2];
         DATABASE_MONSTERS[3].limit = ROUNDS[0][3];
-        
+
         htmlInsertDiv("ROUND COMPLETE", "nextRound", "NEXT ROUND");
 
         BUTTON.addEventListener('click', () => 
         {
             CURRENT_ROUND++;
-            PAUSE_GAME = true;
+            PAUSE_GAME = false;
             MENU.parentNode.removeChild(MENU);
             MENU = null;
             monsterGenerate();
@@ -31,11 +51,12 @@ UserInterface.prototype.next = function()
 
 UserInterface.prototype.lose = function()
 {
-    if (PLAYER.hp <= 0 && !MENU) 
+    if (PLAYER.hp <= 0 && !MENU && START_GAME) 
     {
         htmlInsertDiv("YOU LOSE", "restart", "PLAY AGAIN");
-        PLAYER.sprite.currentFrameIndex = 4;
+
         Object.freeze(PLAYER);
+
         BUTTON.addEventListener('click', () => 
         {
             location.reload();
@@ -45,9 +66,10 @@ UserInterface.prototype.lose = function()
 
 UserInterface.prototype.win = function()
 {
-    if (flagMonstersDefeated() && !MENU && ROUNDS.length <= 1)
+    if (flagMonstersDefeated() && !MENU && ROUNDS.length <= 1 && START_GAME)
     {
         htmlInsertDiv("YOU WIN", "restart", "PLAY AGAIN");
+
         BUTTON.addEventListener('click', () => 
         {
             location.reload();
@@ -121,7 +143,6 @@ UserInterface.prototype.skills = function()
         ctx.strokeStyle = "white";
         ctx.lineWidth = 1;
         ctx.strokeRect((WIDTH * 0.47) - 5, (HEIGHT * 0.93) - 18, 60, 60);
-
         ctx.font = '20px Dosis';
         ctx.fillStyle = "white"
         ctx.fillText(`${PLAYER.abilities.teleport.cooldownRemaining/1000} sec`, WIDTH * 0.47, HEIGHT * 0.948);
@@ -140,10 +161,9 @@ UserInterface.prototype.healthbar = function()
     gradient.addColorStop(1, "rgba(255, 255, 255, 0.2)");
     gradient.addColorStop(0, "rgba(0, 0, 0, 0.1)");
     ctx.fillStyle = gradient;
-
+    
     UTILITIES.drawSquare(healthBarX-2, healthBarY-2, PLAYER.hpMax*2+4, healthBarHeight+4, "black", false);
     UTILITIES.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, "red", false);
-
     UTILITIES.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, gradient, false);
 
     ctx.fillStyle = "black";

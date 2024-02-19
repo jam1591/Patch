@@ -16,6 +16,7 @@ let SLIME_INTERVAL_ID;
 let SQUID_INTERVAL_ID;
 let STAR_INTERVAL_ID;
 let HULK_INTERVAL_ID;
+
 let ANIMATION_ID;
 
 let SLIME_KILL_COUNT = 0;
@@ -25,7 +26,7 @@ let HULK_KILL_COUNT = 0;
 
 const MONSTER_FADE_ON_DEATH = 0.005; 
 
-let PAUSE_GAME = true;
+let PAUSE_GAME = false;
 let START_GAME = false;
 
 let FRAME_COUNT = 0;
@@ -52,7 +53,6 @@ for (let i = 0; i < 5; i++)
     const archer = UTILITIES.getRandomNumber(1, 3);
     const tank = UTILITIES.getRandomNumber(1, 3);
     const boss = UTILITIES.getRandomNumber(0, 2);
-
     const array = [swarm, archer, tank, boss];
     ROUNDS.push(array);
 };
@@ -60,12 +60,15 @@ for (let i = 0; i < 5; i++)
 const DATABASE_MONSTERS = [
     {
         id: 0,
-        sprite: { sheet: "img/Sprite-0002.png", frameWidth: 48, frameHeight: 26, totalFrames: 6, currentFrameIndex: 0},
-        label: "Swarm",
+        sprite: { 
+            sheet: "img/Sprite-0002.png", 
+            frameWidth: 48, 
+            frameHeight: 26, 
+            totalFrames: 6, 
+            currentFrameIndex: 0},
         speed: 0.8,
         hp: 8,
         hpMax: 10,
-        c: "red",
         w: 40,
         h: 40,
         rate: 1000,
@@ -74,13 +77,15 @@ const DATABASE_MONSTERS = [
     },
     {
         id: 1,
-        sprite: { sheet: "img/Sprite-0001.png", frameWidth: 48, frameHeight: 48, totalFrames: 6, currentFrameIndex: 0},
-        hp:
-            8,
-        hpMax: 8,
-        label: "Archer",
+        sprite: { 
+            sheet: "img/Sprite-0001.png", 
+            frameWidth: 48, 
+            frameHeight: 48, 
+            totalFrames: 6, 
+            currentFrameIndex: 0},
         speed: 0,
-        c: "blue",
+        hp: 8,
+        hpMax: 8,
         w: 80,
         h: 80,
         rate: 2500,
@@ -89,12 +94,15 @@ const DATABASE_MONSTERS = [
     },
     {
         id: 2,
-        sprite: { sheet: "img/Sprite-0006.png", frameWidth: 80, frameHeight: 80, totalFrames: 10, currentFrameIndex: 0},
+        sprite: { 
+            sheet: "img/Sprite-0006.png", 
+            frameWidth: 80, 
+            frameHeight: 80, 
+            totalFrames: 10, 
+            currentFrameIndex: 0},
+        speed: 0.50,
         hp: 15,
         hpMax: 15,
-        label: "Tank",
-        speed: 0.50,
-        c: "green",
         w: 80,
         h: 80,
         rate: 4500,
@@ -103,11 +111,15 @@ const DATABASE_MONSTERS = [
     },
     {
         id: 3,
-        sprite: { sheet: "img/Sprite-0008.png", frameWidth: 150, frameHeight: 150, totalFrames: 9, currentFrameIndex: 0},
-        hp: 25,
-        label: "Boss",
+        sprite: { 
+            sheet: "img/Sprite-0008.png", 
+            frameWidth: 150, 
+            frameHeight: 150, 
+            totalFrames: 9, 
+            currentFrameIndex: 0},
         speed: 0.8,
-        c: "purple",
+        hp: 25,
+        hpMax: 25,
         w: 100,
         h: 100,
         rate: 8000,

@@ -26,11 +26,11 @@
 
 - **Description**: Renders the player on the canvas.
 - **Sub-functions**:
-  - `player.playerMovement()`: Manages player movement.
-  - `player.playerMovementTeleport()`: Handles player teleportation movement.
-  - `player.animation()`: Animates the player.
-  - `player.updateHealth()`: Updates player health status.
-  - `player.draw()`: Draws the player on the canvas.
+  - `PLAYER.playerMovement()`: Manages player movement.
+  - `PLAYER.playerMovementTeleport()`: Handles player teleportation movement.
+  - `PLAYER.animation()`: Animates the player.
+  - `PLAYER.updateHealth()`: Updates player health status.
+  - `PLAYER.draw()`: Draws the player on the canvas.
 
 ### `renderCanvas()`
 
@@ -40,11 +40,11 @@
 
 - **Description**: Renders the user interface elements.
 - **Sub-functions**:
-  - `userInterface.instructions()`: Displays game instructions.
-  - `userInterface.rounds()`: Displays current round information.
-  - `userInterface.kills()`: Displays kill count.
-  - `userInterface.skills()`: Displays available skills.
-  - `userInterface.healthbar()`: Displays player health bar.
+  - `USERINTERFACE.instructions()`: Displays game instructions.
+  - `USERINTERFACE.rounds()`: Displays current round information.
+  - `USERINTERFACE.kills()`: Displays kill count.
+  - `USERINTERFACE.skills()`: Displays available skills.
+  - `USERINTERFACE.healthbar()`: Displays player health bar.
 
 ## Other Functions:
 

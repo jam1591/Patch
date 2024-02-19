@@ -7,7 +7,11 @@ function Bullet(x, y, d, sheet)
     this.y = UTILITIES.relativeSquareCenter(y, PLAYER.h, this.h),
     this.s = 4,
     this.d = d,
-    this.sprite = { frameWidth: 10, frameHeight: 10, totalFrames: 6, currentFrameIndex: 0},
+    this.sprite = { 
+        frameWidth: 10, 
+        frameHeight: 10, 
+        totalFrames: 6, 
+        currentFrameIndex: 0},
     this.image = new Image(),
     this.image.src = sheet
 };

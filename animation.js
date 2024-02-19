@@ -7,7 +7,6 @@ function renderMonsters()
         monsterOffset(monster);
         monsterCollision(monster);
         monsterSkillUse(monster);
-
         //Will draw monsters and update kill counts.
         monsterDraw(monster);
     });
@@ -49,7 +48,7 @@ function renderUserInterface()
 
 function animate() 
 {
-    if (PAUSE_GAME) 
+    if (!PAUSE_GAME) 
     {
         renderCanvas();
         renderPlayer();
@@ -57,13 +56,9 @@ function animate()
         renderBullets();
         renderUserInterface();
     };
-
     FRAME_COUNT++;
     ANIMATION_ID = requestAnimationFrame(animate);
 };
-
-monsterGenerate();
-animate();
 
 function monsterGenerate()
 {
@@ -81,6 +76,7 @@ function monsterStopGenerate()
     clearInterval(HULK_INTERVAL_ID);
 };
 
+setInterval(USER_INTERFACE.start, 16);
 setInterval(USER_INTERFACE.next, 16);
 setInterval(USER_INTERFACE.win, 16);
 setInterval(USER_INTERFACE.lose, 16);

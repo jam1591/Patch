@@ -47,6 +47,7 @@ PlayerModel.prototype.playerMovementTeleport = function()
     if (this.abilities.teleport.flag && PLAYER.controls.skill.SPACE) 
     {
         this.abilities.teleport.flag = false;
+
         if (this.controls.movement.W && this.controls.skill.SPACE) { this.y -= this.abilities.teleport.range; };
         if (this.controls.movement.S && this.controls.skill.SPACE) { this.y += this.abilities.teleport.range; };
         if (this.controls.movement.A && this.controls.skill.SPACE) { this.x -= this.abilities.teleport.range; };
@@ -55,6 +56,7 @@ PlayerModel.prototype.playerMovementTeleport = function()
         const cooldownInterval = setInterval(() => 
         {
             this.abilities.teleport.cooldownRemaining -= 100;
+            
             if (this.abilities.teleport.cooldownRemaining <= 0) 
             {
                 clearInterval(cooldownInterval);

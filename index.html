@@ -15,7 +15,7 @@
 
       canvas 
       {
-        background-color: #72751b;
+        background-color: #000000;
         position: absolute;
         top: 50%;
         font-family: "Dosis", sans-serif;
@@ -54,7 +54,8 @@
         }
 
         #nextRound,
-        #restart 
+        #restart,
+        #start
         {
           display: block;
           margin: 10px auto;
@@ -73,7 +74,8 @@
         }
 
           #nextRound:hover,
-          #restart:hover 
+          #restart:hover,
+          #start:hover
           {
             background-color: #ffffff;
             color: #000000;
@@ -84,7 +86,7 @@
       justify-content: center;
       cursor: pointer;
       width: 100%;
-      color: #72751b;
+      color: #ffffff;
       font-family: "Dosis", sans-serif;
     }
 
@@ -108,7 +110,7 @@
   <div id="game">
     <canvas id="myCanvas"></canvas>
     <div id="author">
-      <a href="https://www.youtube.com/watch?v=oavMtUWDBTM">@jam1591 : 2024-02-17</a>
+      <a href="https://www.youtube.com/watch?v=oavMtUWDBTM">@jam1591 : 2024-02-19</a>
     </div>
   </div>
 
@@ -122,16 +124,16 @@
   <script src="js/player/playerModel.js"></script>
   <script src="js/player/playerActions.js"></script>
 
-  <!-- Player Bullet-->
+  <!-- Player Bullets-->
   <script src="js/bullet/bulletModel.js"></script>
   <script src="js/bullet/bulletActions.js"></script>
 
-  <!-- Monster -->
+  <!-- Monster-->
   <script src="js/monster/monsterSkill.js"></script>
   <script src="js/monster/monsterModel.js"></script>
   <script src="js/monster/monsterActions.js"></script>
   
-  <!-- Program Run-->
+  <!-- SETUP / ANIMATION-->
   <script src="index.js"></script>
   <script src="animation.js"></script>
 

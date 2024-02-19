@@ -26,7 +26,6 @@ function monsterModel(database)
         y: UTILITIES.getRandomNumber(100,900),
         w: database.w,
         h: database.h,
-        c: database.c,
         speed: database.speed,
         sprite: {
             sheet: database.sprite.sheet,
