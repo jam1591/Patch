@@ -5,25 +5,25 @@ function UserInterface()
 
 UserInterface.prototype.next = function() 
 {
-    if (flagMonstersDefeated() && !menu && rounds.length > 1) 
+    if (flagMonstersDefeated() && !MENU && ROUNDS.length > 1) 
     {
-        pauseGame = false;
+        PAUSE_GAME = false;
         monsterStopGenerate();
 
-        rounds.shift();
-        monsterDatabase[0].limit = rounds[0][0];
-        monsterDatabase[1].limit = rounds[0][1];
-        monsterDatabase[2].limit = rounds[0][2];
-        monsterDatabase[3].limit = rounds[0][3];
+        ROUNDS.shift();
+        DATABASE_MONSTERS[0].limit = ROUNDS[0][0];
+        DATABASE_MONSTERS[1].limit = ROUNDS[0][1];
+        DATABASE_MONSTERS[2].limit = ROUNDS[0][2];
+        DATABASE_MONSTERS[3].limit = ROUNDS[0][3];
         
         htmlInsertDiv("ROUND COMPLETE", "nextRound", "NEXT ROUND");
 
-        button.addEventListener('click', () => 
+        BUTTON.addEventListener('click', () => 
         {
-            roundCount++;
-            pauseGame = true;
-            menu.parentNode.removeChild(menu);
-            menu = null;
+            CURRENT_ROUND++;
+            PAUSE_GAME = true;
+            MENU.parentNode.removeChild(MENU);
+            MENU = null;
             monsterGenerate();
         });
     };
@@ -31,12 +31,12 @@ UserInterface.prototype.next = function()
 
 UserInterface.prototype.lose = function()
 {
-    if (player.hp <= 0 && !menu) 
+    if (PLAYER.hp <= 0 && !MENU) 
     {
         htmlInsertDiv("YOU LOSE", "restart", "PLAY AGAIN");
-        player.sprite.currentFrameIndex = 4;
-        Object.freeze(player);
-        button.addEventListener('click', () => 
+        PLAYER.sprite.currentFrameIndex = 4;
+        Object.freeze(PLAYER);
+        BUTTON.addEventListener('click', () => 
         {
             location.reload();
         });
@@ -45,10 +45,10 @@ UserInterface.prototype.lose = function()
 
 UserInterface.prototype.win = function()
 {
-    if (flagMonstersDefeated() && !menu && rounds.length <= 1)
+    if (flagMonstersDefeated() && !MENU && ROUNDS.length <= 1)
     {
         htmlInsertDiv("YOU WIN", "restart", "PLAY AGAIN");
-        button.addEventListener('click', () => 
+        BUTTON.addEventListener('click', () => 
         {
             location.reload();
         });
@@ -74,22 +74,22 @@ UserInterface.prototype.rounds = function()
 {
     ctx.fillStyle = "black";
     ctx.font = 'bold 25px Dosis';
-    ctx.fillText(`ROUND: ${roundCount+1}`, WIDTH * 0.45, (HEIGHT * 0.01)+25);
+    ctx.fillText(`ROUND: ${CURRENT_ROUND}`, WIDTH * 0.45, (HEIGHT * 0.01)+25);
 };
 
 UserInterface.prototype.kills = function()
 {
     let locations = [
-        {image: swarmImage, x: 50, y: 50, w: 45, h: 45, killCount: swarmKillCount},
-        {image: archerImage, x: 100, y: 100, w: 45, h: 45, killCount: archerKillCount},
-        {image: tankImage, x: 150, y: 150, w: 45, h: 45, killCount: tankkillCount},
-        {image: bossImage, x: 200, y: 200, w: 45, h: 45, killCount: bosskillCount}];
+        {image: SLIME_LOGO_IMAGE, x: 50, y: 50, w: 45, h: 45, killCount: SLIME_KILL_COUNT},
+        {image: SQUID_LOGO_IMAGE, x: 100, y: 100, w: 45, h: 45, killCount: SQUID_KILL_COUNT},
+        {image: STAR_LOGO_IMAGE, x: 150, y: 150, w: 45, h: 45, killCount: STAR_KILL_COUNT},
+        {image: HULK_LOGO_IMAGE, x: 200, y: 200, w: 45, h: 45, killCount: HULK_KILL_COUNT}];
 
     for (let i = 0; i < 4; i++) 
     {
-        const monster = monsterDatabase[i];
+        const monster = DATABASE_MONSTERS[i];
 
-        utilities.drawImage(
+        UTILITIES.drawImage(
             locations[i].image,
             0 * monster.sprite.frameWidth,
             0,
@@ -108,15 +108,15 @@ UserInterface.prototype.kills = function()
 
 UserInterface.prototype.skills = function()
 {
-    if(player.teleportCooldownRemaining == 3000 ) 
+    if(PLAYER.abilities.teleport.cooldownRemaining == 3000 ) 
     {
         ctx.fillStyle = "black";
-        ctx.drawImage(image, (WIDTH * 0.47) - 5, (HEIGHT * 0.93) - 18, 60, 60);
+        ctx.drawImage(PLAYER_SKILL_TELEPORT, (WIDTH * 0.47) - 5, (HEIGHT * 0.93) - 18, 60, 60);
     } 
     else 
     {
         ctx.globalAlpha = 0.2;
-        ctx.drawImage(image, (WIDTH * 0.47) - 5, (HEIGHT * 0.93) - 18, 60, 60);
+        ctx.drawImage(PLAYER_SKILL_TELEPORT, (WIDTH * 0.47) - 5, (HEIGHT * 0.93) - 18, 60, 60);
         ctx.globalAlpha = 1;
         ctx.strokeStyle = "white";
         ctx.lineWidth = 1;
@@ -124,7 +124,7 @@ UserInterface.prototype.skills = function()
 
         ctx.font = '20px Dosis';
         ctx.fillStyle = "white"
-        ctx.fillText(`${player.teleportCooldownRemaining/1000} sec`, WIDTH * 0.47, HEIGHT * 0.948);
+        ctx.fillText(`${PLAYER.abilities.teleport.cooldownRemaining/1000} sec`, WIDTH * 0.47, HEIGHT * 0.948);
     };
 };
 
@@ -134,17 +134,17 @@ UserInterface.prototype.healthbar = function()
     const healthBarY = HEIGHT * 0.01;
 
     const healthBarHeight = 30;
-    const redHealthBarWidth = player.hp*2;
+    const redHealthBarWidth = PLAYER.hp*2;
 
     const gradient = ctx.createLinearGradient(healthBarX, healthBarY, healthBarX + redHealthBarWidth,healthBarHeight);
     gradient.addColorStop(1, "rgba(255, 255, 255, 0.2)");
     gradient.addColorStop(0, "rgba(0, 0, 0, 0.1)");
     ctx.fillStyle = gradient;
 
-    utilities.drawSquare(healthBarX-2, healthBarY-2, player.hpMax*2+4, healthBarHeight+4, "black", false);
-    utilities.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, "red", false);
+    UTILITIES.drawSquare(healthBarX-2, healthBarY-2, PLAYER.hpMax*2+4, healthBarHeight+4, "black", false);
+    UTILITIES.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, "red", false);
 
-    utilities.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, gradient, false);
+    UTILITIES.drawSquare(healthBarX, healthBarY, redHealthBarWidth, healthBarHeight, gradient, false);
 
     ctx.fillStyle = "black";
     ctx.font = '25px Dosis';
@@ -153,11 +153,11 @@ UserInterface.prototype.healthbar = function()
 
 function flagMonstersDefeated() 
 {
-    return monsterDatabase[0].limit == 0 &&
-        monsterDatabase[1].limit == 0 &&
-        monsterDatabase[2].limit == 0 &&
-        monsterDatabase[3].limit == 0 &&
-        monsterActive.length == 0;
+    return DATABASE_MONSTERS[0].limit == 0 &&
+        DATABASE_MONSTERS[1].limit == 0 &&
+        DATABASE_MONSTERS[2].limit == 0 &&
+        DATABASE_MONSTERS[3].limit == 0 &&
+        ACTIVE_MONSTERS.length == 0;
 };
 
 function htmlInsertDiv(h1Value, buttonId, buttonValue) 
@@ -170,7 +170,7 @@ function htmlInsertDiv(h1Value, buttonId, buttonValue)
         </div>
     `;
 
-    game.insertAdjacentHTML('beforebegin', menuDiv);
-    menu = document.querySelector('#menu');
-    button = document.querySelector('#' + buttonId);
+    GAME.insertAdjacentHTML('beforebegin', menuDiv);
+    MENU = document.querySelector('#menu');
+    BUTTON = document.querySelector('#' + buttonId);
 };

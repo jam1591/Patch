@@ -8,17 +8,21 @@ function PlayerModel(x, y, w, h, c, s, sheet)
     this.h = h,
     this.c = c,
     this.s = s,
-    this.W = false,
-    this.S = false,
-    this.A = false,
-    this.D = false,
-    this.SPACE = false,
-    this.shootFlag = true,
-    this.shootCooldown = 500,
-    this.teleportRange = 100,
-    this.teleportCooldown = 3000,
-    this.teleportFlag = true,
-    this.teleportCooldownRemaining = 3000,
+    this.controls = {
+        movement: {
+            W: false,
+            S: false,
+            A: false,
+            D: false},
+        skill: {
+            SPACE: false,
+            F: false}},
+    this.abilities = {
+        teleport: {
+            range: 100,
+            cooldown: 3000,
+            cooldownRemaining: 3000,
+            flag: true}},
     this.sprite = {
         frameWidth: 48,
         frameHeight: 48,

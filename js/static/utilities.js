@@ -103,6 +103,28 @@ Utilities.prototype.drawImage = function (sprite, currentSpriteX, currentSpriteY
         h);
 };
 
+Utilities.prototype.drawImageOpacity = function (monster, opacity) 
+{
+    ctx.shadowColor = "black";
+    ctx.shadowBlur = 2;
+
+    ctx.globalAlpha = opacity;
+
+    ctx.drawImage(
+        monster.sprite.image,
+        0 * monster.sprite.frameWidth,
+        0,
+        monster.sprite.frameWidth,
+        monster.sprite.frameHeight,
+        monster.x,
+        monster.y,
+        monster.w,
+        monster.h);
+
+    ctx.globalAlpha = 1;
+};
+
+
 Utilities.prototype.getRandomNumber = function(min, max)
 {
     const random = Math.random();

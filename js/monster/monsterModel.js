@@ -9,7 +9,7 @@ function monsterAdd(database)
             monster.sprite.image = image;
             image.src = monster.sprite.sheet; 
             database.limit -= 1;
-            monsterActive.push(monster);
+            ACTIVE_MONSTERS.push(monster);
         };
     }, database.rate);
 }
@@ -22,8 +22,8 @@ function monsterModel(database)
         hpMax: database.hpMax,
         func: database.func,
         name: Math.random(),
-        x: Math.floor(Math.random() * (WIDTH - 40)) + 40,
-        y: Math.floor(Math.random() * (HEIGHT- 40)) + 40,
+        x: UTILITIES.getRandomNumber(100,900),
+        y: UTILITIES.getRandomNumber(100,900),
         w: database.w,
         h: database.h,
         c: database.c,
@@ -33,7 +33,8 @@ function monsterModel(database)
             frameWidth: database.sprite.frameWidth,
             frameHeight: database.sprite.frameHeight,
             totalFrames: database.sprite.totalFrames,
-            currentFrameIndex: 0}};
+            currentFrameIndex: 0,
+            opacity: 1}};
 
     function addArrowModel()
     {
@@ -42,15 +43,15 @@ function monsterModel(database)
             if (monster.func[i].name == "monsterFireArrow") 
             {
                 monster.arrow = {
-                    x: utilities.relativeSquareCenter(monster.x, monster.w, 7),
-                    y: utilities.relativeSquareCenter(monster.y, monster.h, 7),
+                    x: UTILITIES.relativeSquareCenter(monster.x, monster.w, 7),
+                    y: UTILITIES.relativeSquareCenter(monster.y, monster.h, 7),
                     w: 10,
                     h: 10,
-                    vector: utilities.unitVectorSpecific(
-                        utilities.relativeSquareCenter(monster.x, monster.w, 7),
-                        utilities.relativeSquareCenter(monster.y, monster.h, 7),
-                        utilities.relativeSquareCenter(player.x, player.w, 7),
-                        utilities.relativeSquareCenter(player.y, player.h, 7)),
+                    vector: UTILITIES.unitVectorSpecific(
+                        UTILITIES.relativeSquareCenter(monster.x, monster.w, 7),
+                        UTILITIES.relativeSquareCenter(monster.y, monster.h, 7),
+                        UTILITIES.relativeSquareCenter(PLAYER.x, PLAYER.w, 7),
+                        UTILITIES.relativeSquareCenter(PLAYER.y, PLAYER.h, 7)),
                     speed: 3,
                     sprite: {sheet: "img/Sprite-0005.png", frameWidth: 10, frameHeight: 10, totalFrames: 6, currentFrameIndex: 0},
                     image: new Image()};

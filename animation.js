@@ -1,20 +1,21 @@
 
 function renderMonsters() 
 {
-    monsterActive.forEach(monster =>
+    ACTIVE_MONSTERS.forEach(monster =>
     {
         monsterAnimation(monster);
-        monsterKillCounter(monster);
         monsterOffset(monster);
         monsterCollision(monster);
         monsterSkillUse(monster);
+
+        //Will draw monsters and update kill counts.
         monsterDraw(monster);
     });
 };
 
 function renderBullets() 
 {
-    bullets.forEach(bullet => 
+    PLAYER_BULLETS.forEach(bullet => 
     {
         bullet.animation();
         bullet.movement();
@@ -25,39 +26,40 @@ function renderBullets()
 
 function renderPlayer() 
 {
-    player.playerMovement();
-    player.playerMovementTeleport();
-    player.animation();
-    player.updateHealth();
-    player.draw();
+    PLAYER.playerMovement();
+    PLAYER.playerMovementTeleport();
+    PLAYER.animation();
+    PLAYER.updateHealth();
+    PLAYER.draw();
 };
 
 function renderCanvas() 
 {
-    ctx.drawImage(mapBackground, 0, 0);
+    ctx.drawImage(MAP_BACKGROUND, 0, 0);
 };
 
 function renderUserInterface() 
 {
-    userInterface.instructions();
-    userInterface.rounds();
-    userInterface.kills();
-    userInterface.skills();
-    userInterface.healthbar();
+    USER_INTERFACE.instructions();
+    USER_INTERFACE.rounds();
+    USER_INTERFACE.kills();
+    USER_INTERFACE.skills();
+    USER_INTERFACE.healthbar();
 };
 
 function animate() 
 {
-    if (pauseGame) {
+    if (PAUSE_GAME) 
+    {
         renderCanvas();
         renderPlayer();
         renderMonsters();
         renderBullets();
         renderUserInterface();
-    }
+    };
 
-    frameCount++;
-    animationId = requestAnimationFrame(animate);
+    FRAME_COUNT++;
+    ANIMATION_ID = requestAnimationFrame(animate);
 };
 
 monsterGenerate();
@@ -65,46 +67,46 @@ animate();
 
 function monsterGenerate()
 {
-    swarmIntervalId = monsterAdd(monsterDatabase[0]);
-    archerIntervalId = monsterAdd(monsterDatabase[1]);
-    tankIntervalId = monsterAdd(monsterDatabase[2]);
-    bossIntervalId = monsterAdd(monsterDatabase[3]);
+    SLIME_INTERVAL_ID = monsterAdd(DATABASE_MONSTERS[0]);
+    SQUID_INTERVAL_ID = monsterAdd(DATABASE_MONSTERS[1]);
+    STAR_INTERVAL_ID = monsterAdd(DATABASE_MONSTERS[2]);
+    HULK_INTERVAL_ID = monsterAdd(DATABASE_MONSTERS[3]);
 };
 
 function monsterStopGenerate()
 {
-    clearInterval(swarmIntervalId);
-    clearInterval(archerIntervalId);
-    clearInterval(tankIntervalId);
-    clearInterval(bossIntervalId);
+    clearInterval(SLIME_INTERVAL_ID);
+    clearInterval(SQUID_INTERVAL_ID);
+    clearInterval(STAR_INTERVAL_ID);
+    clearInterval(HULK_INTERVAL_ID);
 };
 
-setInterval(userInterface.next, 16);
-setInterval(userInterface.win, 16);
-setInterval(userInterface.lose, 16);
+setInterval(USER_INTERFACE.next, 16);
+setInterval(USER_INTERFACE.win, 16);
+setInterval(USER_INTERFACE.lose, 16);
 
 document.addEventListener("keydown", function (e) 
 {
-    player.playerEventMovement(e, true);
+    PLAYER.playerEventMovement(e, true);
 
     switch (e.key) 
     {
         case 'ArrowUp':
-            bullets.push(new Bullet(player.x, player.y, "ArrowUp", "img/Sprite-0004.png"));
+            PLAYER_BULLETS.push(new Bullet(PLAYER.x, PLAYER.y, "ArrowUp", "img/Sprite-0004.png"));
             break;
         case 'ArrowDown':
-            bullets.push(new Bullet(player.x, player.y, "ArrowDown", "img/Sprite-0004.png"));
+            PLAYER_BULLETS.push(new Bullet(PLAYER.x, PLAYER.y, "ArrowDown", "img/Sprite-0004.png"));
             break; 
         case 'ArrowLeft':
-            bullets.push(new Bullet(player.x, player.y, "ArrowLeft", "img/Sprite-0004.png"));
+            PLAYER_BULLETS.push(new Bullet(PLAYER.x, PLAYER.y, "ArrowLeft", "img/Sprite-0004.png"));
             break; 
         case 'ArrowRight':
-            bullets.push(new Bullet(player.x, player.y, "ArrowRight", "img/Sprite-0004.png"));
+            PLAYER_BULLETS.push(new Bullet(PLAYER.x, PLAYER.y, "ArrowRight", "img/Sprite-0004.png"));
             break;
     };
 });
 
 document.addEventListener("keyup", function (e) 
 {
-    player.playerEventMovement(e, false);
+    PLAYER.playerEventMovement(e, false);
 });

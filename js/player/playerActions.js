@@ -1,23 +1,23 @@
 PlayerModel.prototype.playerMovement = function () 
 {
-    if (this.W && this.y > 0) { this.y -= this.s; };
-    if (this.S && this.y < (HEIGHT - this.h)) { this.y += this.s; };
-    if (this.A && this.x > 0) { this.x -= this.s; };
-    if (this.D && this.x < (WIDTH - this.w)) { this.x += this.s; };
+    if (this.controls.movement.W && this.y > 0) { this.y -= this.s; };
+    if (this.controls.movement.S && this.y < (HEIGHT - this.h)) { this.y += this.s; };
+    if (this.controls.movement.A && this.x > 0) { this.x -= this.s; };
+    if (this.controls.movement.D && this.x < (WIDTH - this.w)) { this.x += this.s; };
 };
 
 PlayerModel.prototype.playerEventMovement = function (e, flag) 
 {
-    if (e.key == " ") { this.SPACE = flag;};
-    if (e.key == "w") { this.W = flag; };
-    if (e.key == "s") { this.S = flag; };
-    if (e.key == "a") { this.A = flag; };
-    if (e.key == "d") { this.D = flag; };
+    if (e.key == " ") { this.controls.skill.SPACE = flag;};
+    if (e.key == "w") { this.controls.movement.W = flag; };
+    if (e.key == "s") { this.controls.movement.S = flag; };
+    if (e.key == "a") { this.controls.movement.A = flag; };
+    if (e.key == "d") { this.controls.movement.D = flag; };
 };
 
 PlayerModel.prototype.animation = function() 
 {
-    if (frameCount % animSpeed == 0) 
+    if (FRAME_COUNT % ANIMATION_SPEED == 0) 
     {
         this.sprite.currentFrameIndex = (this.sprite.currentFrameIndex + 1) % this.sprite.totalFrames;
     };
@@ -30,7 +30,7 @@ PlayerModel.prototype.updateHealth = function()
 
 PlayerModel.prototype.draw = function() 
 {
-    utilities.drawImage(
+    UTILITIES.drawImage(
         this.image,
         this.sprite.currentFrameIndex * this.sprite.frameWidth,
         0,
@@ -42,26 +42,26 @@ PlayerModel.prototype.draw = function()
         this.h);
 };
 
-PlayerModel.prototype.playerMovementTeleport = function () 
+PlayerModel.prototype.playerMovementTeleport = function() 
 {
-        if (this.teleportFlag && player.SPACE) 
+    if (this.abilities.teleport.flag && PLAYER.controls.skill.SPACE) 
+    {
+        this.abilities.teleport.flag = false;
+        if (this.controls.movement.W && this.controls.skill.SPACE) { this.y -= this.abilities.teleport.range; };
+        if (this.controls.movement.S && this.controls.skill.SPACE) { this.y += this.abilities.teleport.range; };
+        if (this.controls.movement.A && this.controls.skill.SPACE) { this.x -= this.abilities.teleport.range; };
+        if (this.controls.movement.D && this.controls.skill.SPACE) { this.x += this.abilities.teleport.range; };
+        
+        const cooldownInterval = setInterval(() => 
         {
-            this.teleportFlag = false;
-            if (this.W && this.SPACE) { this.y -= this.teleportRange; };
-            if (this.S && this.SPACE) { this.y += this.teleportRange; };
-            if (this.A && this.SPACE) { this.x -= this.teleportRange; };
-            if (this.D && this.SPACE) { this.x += this.teleportRange; };
-           
-            const cooldownInterval = setInterval(() => 
+            this.abilities.teleport.cooldownRemaining -= 100;
+            if (this.abilities.teleport.cooldownRemaining <= 0) 
             {
-                this.teleportCooldownRemaining -= 100;
-                if (this.teleportCooldownRemaining <= 0) 
-                {
-                    clearInterval(cooldownInterval);
-                    this.teleportFlag = true;
-                    this.teleportCooldownRemaining = this.teleportCooldown;
-                };
-            }
-            , 100);
+                clearInterval(cooldownInterval);
+                this.abilities.teleport.flag = true;
+                this.abilities.teleport.cooldownRemaining = this.abilities.teleport.cooldown;
+            };
         }
+        , 100);
+    }
 };

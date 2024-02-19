@@ -1,61 +1,63 @@
-const game = document.querySelector('#game');
-
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext('2d');
+const GAME = document.querySelector('#game');
 const WIDTH = canvas.width = 1000;
 const HEIGHT = canvas.height = 1000;
 
-//As Rounds change these will mutaute as I want to reset them.
-let button;
-let menu;
+//As rounds change these will mutaute as I want to reset them.
+let BUTTON;
+let MENU;
 
-const monsterActive = [];
-const bullets = [];
+const ACTIVE_MONSTERS = [];
+const PLAYER_BULLETS = [];
 
-//As rounds change I want to mutate these intervals.
-let swarmIntervalId;
-let archerIntervalId;
-let tankIntervalId;
-let bossIntervalId;
-let animationId;
+//As rounds change I want to mutate these intervals nad counts.
+let SLIME_INTERVAL_ID;
+let SQUID_INTERVAL_ID;
+let STAR_INTERVAL_ID;
+let HULK_INTERVAL_ID;
+let ANIMATION_ID;
 
-let swarmKillCount = 0;
-let archerKillCount = 0;
-let tankkillCount = 0;
-let bosskillCount = 0;
+let SLIME_KILL_COUNT = 0;
+let SQUID_KILL_COUNT = 0;
+let STAR_KILL_COUNT = 0;
+let HULK_KILL_COUNT = 0;
 
-let pauseGame = true;
+const MONSTER_FADE_ON_DEATH = 0.005; 
 
-let frameCount = 0;
-let roundCount = 0;
-const animSpeed = 16;
+let PAUSE_GAME = true;
+let START_GAME = false;
+
+let FRAME_COUNT = 0;
+let CURRENT_ROUND = 1;
+const ANIMATION_SPEED = 16;
 
 //Actors
-const userInterface = new UserInterface();
-const utilities = new Utilities();
-const player = new PlayerModel(
-    utilities.relativeSquareCenter(0, WIDTH, 25), 
-    utilities.relativeSquareCenter(0, HEIGHT, 25), 
+const USER_INTERFACE = new UserInterface();
+const UTILITIES = new Utilities();
+const PLAYER = new PlayerModel(
+    UTILITIES.relativeSquareCenter(0, WIDTH, 25), 
+    UTILITIES.relativeSquareCenter(0, HEIGHT, 25), 
     50, 
     50, 
     "lightgray", 
     1.2, 
     "img/Sprite-0003.png");
 
-let rounds = []
+let ROUNDS = []
 
 for (let i = 0; i < 5; i++) 
 {
-    const swarm = utilities.getRandomNumber(10, 15);
-    const archer = utilities.getRandomNumber(1, 3);
-    const tank = utilities.getRandomNumber(1, 3);
-    const boss = utilities.getRandomNumber(0, 2);
+    const swarm = UTILITIES.getRandomNumber(10, 15);
+    const archer = UTILITIES.getRandomNumber(1, 3);
+    const tank = UTILITIES.getRandomNumber(1, 3);
+    const boss = UTILITIES.getRandomNumber(0, 2);
 
     const array = [swarm, archer, tank, boss];
-    rounds.push(array);
+    ROUNDS.push(array);
 };
 
-const monsterDatabase = [
+const DATABASE_MONSTERS = [
     {
         id: 0,
         sprite: { sheet: "img/Sprite-0002.png", frameWidth: 48, frameHeight: 26, totalFrames: 6, currentFrameIndex: 0},
@@ -68,7 +70,7 @@ const monsterDatabase = [
         h: 40,
         rate: 1000,
         func: [monsterMovement],
-        limit: rounds[0][0]
+        limit: ROUNDS[0][0]
     },
     {
         id: 1,
@@ -83,7 +85,7 @@ const monsterDatabase = [
         h: 80,
         rate: 2500,
         func: [monsterFireArrow],
-        limit: rounds[0][1]
+        limit: ROUNDS[0][1]
     },
     {
         id: 2,
@@ -97,7 +99,7 @@ const monsterDatabase = [
         h: 80,
         rate: 4500,
         func: [monsterBigger, monsterMovement],
-        limit: rounds[0][2]
+        limit: ROUNDS[0][2]
     },
     {
         id: 3,
@@ -110,23 +112,23 @@ const monsterDatabase = [
         h: 100,
         rate: 8000,
         func: [monsterFireArrow,monsterMovement],
-        limit: rounds[0][3]
+        limit: ROUNDS[0][3]
     }];
     
-let swarmImage=  new Image();
-swarmImage.src = monsterDatabase[0].sprite.sheet;
+let SLIME_LOGO_IMAGE=  new Image();
+SLIME_LOGO_IMAGE.src = DATABASE_MONSTERS[0].sprite.sheet;
 
-let archerImage = new Image();
-archerImage.src = monsterDatabase[1].sprite.sheet;
+let SQUID_LOGO_IMAGE = new Image();
+SQUID_LOGO_IMAGE.src = DATABASE_MONSTERS[1].sprite.sheet;
 
-let tankImage =  new Image();
-tankImage.src = monsterDatabase[2].sprite.sheet;
+let STAR_LOGO_IMAGE =  new Image();
+STAR_LOGO_IMAGE.src = DATABASE_MONSTERS[2].sprite.sheet;
 
-let bossImage =  new Image();
-bossImage.src = monsterDatabase[3].sprite.sheet;
+let HULK_LOGO_IMAGE =  new Image();
+HULK_LOGO_IMAGE.src = DATABASE_MONSTERS[3].sprite.sheet;
 
-const mapBackground = new Image();
-mapBackground.src = "img/map.png";
+const MAP_BACKGROUND = new Image();
+MAP_BACKGROUND.src = "img/map.png";
 
-const image = new Image();
-image.src = "img/teleport.png";
+const PLAYER_SKILL_TELEPORT = new Image();
+PLAYER_SKILL_TELEPORT.src = "img/teleport.png";

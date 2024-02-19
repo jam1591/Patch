@@ -16,7 +16,7 @@ function monsterBigger(monster)
 
 function monsterFireArrow(monster) 
 {
-    if (frameCount % animSpeed == 0) 
+    if (FRAME_COUNT % ANIMATION_SPEED == 0) 
     {
         monster.arrow.sprite.currentFrameIndex = (monster.arrow.sprite.currentFrameIndex + 1) % monster.arrow.sprite.totalFrames;
     };
@@ -24,14 +24,14 @@ function monsterFireArrow(monster)
     monster.arrow.x += (monster.arrow.vector.nx) * monster.arrow.speed;
     monster.arrow.y += (monster.arrow.vector.ny) * monster.arrow.speed;
 
-    if (utilities.overlapObjects(monster.arrow, player)) 
+    if (UTILITIES.overlapObjects(monster.arrow, PLAYER)) 
     {
-        player.hp -= 1;
+        PLAYER.hp -= 1;
     };
 
-    if (!utilities.outOfBounds(monster.arrow.x, monster.arrow.y)) 
+    if (!UTILITIES.outOfBounds(monster.arrow.x, monster.arrow.y)) 
     {
-        utilities.drawImage(
+        UTILITIES.drawImage(
             monster.arrow.image,
             monster.arrow.sprite.currentFrameIndex * monster.arrow.sprite.frameWidth,
             0,
@@ -44,23 +44,23 @@ function monsterFireArrow(monster)
     } 
     else 
     {
-        monster.arrow.vector = utilities.unitVectorSpecific(
-            utilities.relativeSquareCenter(monster.x, monster.w, 7),
-            utilities.relativeSquareCenter(monster.y, monster.h, 7),
-            utilities.relativeSquareCenter(player.x, player.w, monster.arrow.w),
-            utilities.relativeSquareCenter(player.y, player.h, monster.arrow.h)),
-        monster.arrow.x = utilities.relativeSquareCenter(monster.x, monster.w, monster.arrow.w);
-        monster.arrow.y = utilities.relativeSquareCenter(monster.y, monster.h, monster.arrow.h);
+        monster.arrow.vector = UTILITIES.unitVectorSpecific(
+            UTILITIES.relativeSquareCenter(monster.x, monster.w, 7),
+            UTILITIES.relativeSquareCenter(monster.y, monster.h, 7),
+            UTILITIES.relativeSquareCenter(PLAYER.x, PLAYER.w, monster.arrow.w),
+            UTILITIES.relativeSquareCenter(PLAYER.y, PLAYER.h, monster.arrow.h)),
+        monster.arrow.x = UTILITIES.relativeSquareCenter(monster.x, monster.w, monster.arrow.w);
+        monster.arrow.y = UTILITIES.relativeSquareCenter(monster.y, monster.h, monster.arrow.h);
     };
 };
 
 function monsterMovement(monster) 
 {
-    let vector = utilities.unitVector(player, monster);
+    let vector = UTILITIES.unitVector(PLAYER, monster);
 
-    if (utilities.overlapObjects(monster, player)) 
+    if (UTILITIES.overlapObjects(monster, PLAYER)) 
     {
-        player.hp -= 0.1;
+        PLAYER.hp -= 0.1;
     };
 
     if (vector.mag) 

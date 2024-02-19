@@ -1,6 +1,6 @@
 Bullet.prototype.animation = function()
 {
-    if (frameCount % animSpeed == 0) {
+    if (FRAME_COUNT % ANIMATION_SPEED == 0) {
         this.sprite.currentFrameIndex = (this.sprite.currentFrameIndex + 1) % this.sprite.totalFrames;
     };
 };
@@ -15,15 +15,15 @@ Bullet.prototype.movement = function()
 
 Bullet.prototype.outOfBounds = function() 
 {
-    if(utilities.outOfBounds(this.x, this.y))
+    if(UTILITIES.outOfBounds(this.x, this.y))
     {
-        utilities.removeObject(this,bullets);
+        UTILITIES.removeObject(this,PLAYER_BULLETS);
     };
 };
 
 Bullet.prototype.draw = function() 
 {
-    utilities.drawImage(
+    UTILITIES.drawImage(
         this.image,
         this.sprite.currentFrameIndex * this.sprite.frameWidth,
         0,
