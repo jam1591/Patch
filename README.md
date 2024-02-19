@@ -7,11 +7,10 @@
 - **Description**: Renders all active monsters on the canvas.
 - **Sub-functions**:
   - `monsterAnimation(monster)`: Animates the monster.
-  - `monsterKillCounter(monster)`: Keeps track of kills by the monster.
   - `monsterOffset(monster)`: Handles monster offsets.
   - `monsterCollision(monster)`: Manages collision detection for monsters.
   - `monsterSkillUse(monster)`: Controls the usage of monster skills.
-  - `monsterDraw(monster)`: Draws the monster on the canvas.
+  - `monsterDraw(monster)`: Draws the monster on the canvas. Keeps track of kills by the monster
 
 ### `renderBullets()`
 
