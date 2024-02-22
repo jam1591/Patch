@@ -1,31 +1,31 @@
 function monsterCollision(monster) 
 {
-    PLAYER_BULLETS.forEach(bullet => {
+    PLAYER_BULLETS.reduce((_, bullet ) => 
+    {
         if(UTILITIES.overlapObjects(monster, bullet))
         {
             UTILITIES.removeObject(bullet, PLAYER_BULLETS);
             monster.hp -= Number(bullet.attack);
         };
-    });
+    }, null);
+
 };
 
 function monsterOffset(monster) 
 {
     for (let i = 0; i < ACTIVE_MONSTERS.length; i++) 
     {
-        if ((monster.name != ACTIVE_MONSTERS[i].name)) 
+        if (monster.name != ACTIVE_MONSTERS[i].name && UTILITIES.overlapObjects(monster, ACTIVE_MONSTERS[i])) 
         {
-            if (UTILITIES.overlapObjects(monster, ACTIVE_MONSTERS[i])) 
+            const vector = UTILITIES.unitVector(monster, ACTIVE_MONSTERS[i]);
+            
+            if (vector.mag < monster.w) 
             {
-                const vector = UTILITIES.unitVector(monster, ACTIVE_MONSTERS[i]);
-                if (vector.mag < monster.w) 
-                {
-                    const angle = Math.atan2(vector.dy, vector.dx);
-                    const targetX = ACTIVE_MONSTERS[i].x + Math.cos(angle) * monster.w;
-                    const targetY = ACTIVE_MONSTERS[i].y + Math.sin(angle) * monster.h;
-                    monster.x = targetX;
-                    monster.y = targetY;
-                };
+                const angle = Math.atan2(vector.dy, vector.dx);
+                const targetX = ACTIVE_MONSTERS[i].x + Math.cos(angle) * monster.w;
+                const targetY = ACTIVE_MONSTERS[i].y + Math.sin(angle) * monster.h;
+                monster.x = targetX;
+                monster.y = targetY;
             };
         };
     };

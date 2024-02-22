@@ -8,7 +8,9 @@ PlayerModel.prototype.playerMovement = function ()
 
 PlayerModel.prototype.playerEventMovement = function (e, flag) 
 {
+    if(e.key == "e") {this.controls.skill.E = flag;}
     if (e.key == " ") { this.controls.skill.SPACE = flag;};
+    if (e.key == "f") { this.controls.skill.F = flag;};
     if (e.key == "w") { this.controls.movement.W = flag; };
     if (e.key == "s") { this.controls.movement.S = flag; };
     if (e.key == "a") { this.controls.movement.A = flag; };
@@ -42,9 +44,9 @@ PlayerModel.prototype.draw = function()
         this.h);
 };
 
-PlayerModel.prototype.playerMovementTeleport = function() 
+PlayerModel.prototype.playerAbilityTeleport = function() 
 {
-    if (this.abilities.teleport.flag && PLAYER.controls.skill.SPACE) 
+    if (this.abilities.teleport.flag && this.controls.skill.SPACE) 
     {
         this.abilities.teleport.flag = false;
 
@@ -66,4 +68,57 @@ PlayerModel.prototype.playerMovementTeleport = function()
         }
         , 100);
     }
+};
+
+PlayerModel.prototype.playerAbilityHeal = function() 
+{
+    if (this.abilities.heal.flag && this.controls.skill.F && this.hp < this.hpMax) 
+    {
+        this.abilities.heal.flag = false;
+        this.hp += ((this.hpMax - this.hp) < this.abilities.heal.value ? this.hpMax - this.hp : this.abilities.heal.value);
+
+        const cooldownInterval = setInterval(() => 
+        {
+            this.abilities.heal.cooldownRemaining -= 100;
+            
+            if (this.abilities.heal.cooldownRemaining <= 0) 
+            {
+                clearInterval(cooldownInterval);
+                this.abilities.heal.flag = true;
+                this.abilities.heal.cooldownRemaining = this.abilities.heal.cooldown;
+            };
+        }
+        , 100);
+    };
+};
+
+PlayerModel.prototype.playerAbilityRun = function() 
+{
+    if (this.abilities.run.flag && this.controls.skill.E) 
+    {
+        this.abilities.run.flag = false;
+        this.s += this.abilities.run.value;
+
+        const cooldownInterval = setInterval(() => 
+        {
+            this.abilities.run.cooldownRemaining -= 100;
+            this.abilities.run.duration -= 100;
+
+            if(this.abilities.run.duration == 0) 
+            {
+                this.s = 1.2;
+                this.abilities.run.duration = this.abilities.run.durationRemaining;
+                
+            };
+
+            if (this.abilities.run.cooldownRemaining <= 0) 
+            {
+                clearInterval(cooldownInterval);
+                this.abilities.run.flag = true;
+                this.abilities.run.cooldownRemaining = this.abilities.run.cooldown;
+               
+            };
+        }
+        , 100);
+    };
 };

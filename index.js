@@ -45,6 +45,8 @@ const PLAYER = new PlayerModel(
     1.2, 
     "img/Sprite-0003.png");
 
+const PLAYER_ABILITIES = PLAYER.abilities;
+
 let ROUNDS = []
 
 for (let i = 0; i < 5; i++) 
@@ -95,12 +97,12 @@ const DATABASE_MONSTERS = [
     {
         id: 2,
         sprite: { 
-            sheet: "img/Sprite-0006.png", 
+            sheet: "img/mob/blue_body_square.png", 
             frameWidth: 80, 
             frameHeight: 80, 
-            totalFrames: 10, 
+            totalFrames: 1, 
             currentFrameIndex: 0},
-        speed: 0.50,
+        speed: 0.20,
         hp: 15,
         hpMax: 15,
         w: 80,
@@ -112,16 +114,16 @@ const DATABASE_MONSTERS = [
     {
         id: 3,
         sprite: { 
-            sheet: "img/Sprite-0008.png", 
-            frameWidth: 150, 
-            frameHeight: 150, 
-            totalFrames: 9, 
+            sheet: "img/mob/green_body_square.png", 
+            frameWidth: 80, 
+            frameHeight: 80, 
+            totalFrames: 1, 
             currentFrameIndex: 0},
         speed: 0.9,
         hp: 25,
         hpMax: 25,
-        w: 150,
-        h: 150,
+        w: 80,
+        h: 80,
         rate: 8000,
         func: [monsterFireArrow,monsterMovement],
         limit: ROUNDS[0][3]
@@ -138,9 +140,3 @@ STAR_LOGO_IMAGE.src = DATABASE_MONSTERS[2].sprite.sheet;
 
 let HULK_LOGO_IMAGE =  new Image();
 HULK_LOGO_IMAGE.src = DATABASE_MONSTERS[3].sprite.sheet;
-
-const MAP_BACKGROUND = new Image();
-MAP_BACKGROUND.src = "img/map.png";
-
-const PLAYER_SKILL_TELEPORT = new Image();
-PLAYER_SKILL_TELEPORT.src = "img/teleport.png";

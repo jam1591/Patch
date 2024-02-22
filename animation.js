@@ -1,32 +1,35 @@
 
-function renderMonsters() 
-{
-    ACTIVE_MONSTERS.forEach(monster =>
+function renderMonsters() {
+    ACTIVE_MONSTERS.reduce((_, monster) => 
     {
         monsterAnimation(monster);
         monsterOffset(monster);
         monsterCollision(monster);
         monsterSkillUse(monster);
-        //Will draw monsters and update kill counts.
+        
+        // Will draw monsters and update kill counts.
         monsterDraw(monster);
-    });
-};
+    }, null);
+}
+
 
 function renderBullets() 
 {
-    PLAYER_BULLETS.forEach(bullet => 
+    PLAYER_BULLETS.reduce((_, bullet) => 
     {
         bullet.animation();
         bullet.movement();
         bullet.outOfBounds();
         bullet.draw();
-    });
+    }, null);
 };
 
 function renderPlayer() 
 {
     PLAYER.playerMovement();
-    PLAYER.playerMovementTeleport();
+    PLAYER.playerAbilityTeleport();
+    PLAYER.playerAbilityHeal();
+    PLAYER.playerAbilityRun();
     PLAYER.animation();
     PLAYER.updateHealth();
     PLAYER.draw();
@@ -34,7 +37,8 @@ function renderPlayer()
 
 function renderCanvas() 
 {
-    ctx.drawImage(MAP_BACKGROUND, 0, 0);
+    ctx.clearRect(0,0,WIDTH,HEIGHT);
+    //ctx.drawImage(MAP_BACKGROUND, 0, 0);
 };
 
 function renderUserInterface() 
@@ -56,6 +60,7 @@ function animate()
         renderBullets();
         renderUserInterface();
     };
+
     FRAME_COUNT++;
     ANIMATION_ID = requestAnimationFrame(animate);
 };

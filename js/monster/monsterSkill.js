@@ -11,7 +11,7 @@ function monsterBigger(monster)
     monster.w += 0.05;
     monster.h += 0.05;
     monster.hp += 0.01;
-    monster.hpMax += 0.01;
+    monster.hpMax += 0.02;
 };
 
 function monsterFireArrow(monster) 

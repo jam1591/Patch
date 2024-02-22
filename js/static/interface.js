@@ -81,15 +81,15 @@ UserInterface.prototype.instructions = function()
 {
     ctx.fillStyle = "white";
     ctx.font = '18px Dosis';
-    ctx.fillText(`TELEPORT: SPACE`, WIDTH * 0.01, HEIGHT * 0.93);
+    ctx.fillText(`ABILITIES: SPACE, F, E`, WIDTH * 0.01, HEIGHT * 0.94);
 
     ctx.fillStyle = "white";
     ctx.font = '18px Dosis';
-    ctx.fillText(`SHOOT: ARROW KEYS`, WIDTH * 0.01, HEIGHT * 0.955);
+    ctx.fillText(`SHOOT: ARROW KEYS`, WIDTH * 0.01, HEIGHT * 0.965);
 
     ctx.fillStyle = "white";
     ctx.font = '18px Dosis';
-    ctx.fillText(`MOVEMENT: WASD`, WIDTH * 0.01, HEIGHT * 0.98);
+    ctx.fillText(`MOVEMENT: WASD`, WIDTH * 0.01, HEIGHT * 0.99);
 };
 
 UserInterface.prototype.rounds = function()
@@ -128,24 +128,30 @@ UserInterface.prototype.kills = function()
     };
 };
 
+
 UserInterface.prototype.skills = function()
 {
-    if(PLAYER.abilities.teleport.cooldownRemaining == 3000 ) 
+    for (const ability in PLAYER_ABILITIES)
     {
-        ctx.fillStyle = "black";
-        ctx.drawImage(PLAYER_SKILL_TELEPORT, (WIDTH * 0.47) - 5, (HEIGHT * 0.93) - 18, 60, 60);
-    } 
-    else 
-    {
-        ctx.globalAlpha = 0.2;
-        ctx.drawImage(PLAYER_SKILL_TELEPORT, (WIDTH * 0.47) - 5, (HEIGHT * 0.93) - 18, 60, 60);
-        ctx.globalAlpha = 1;
-        ctx.strokeStyle = "white";
-        ctx.lineWidth = 1;
-        ctx.strokeRect((WIDTH * 0.47) - 5, (HEIGHT * 0.93) - 18, 60, 60);
-        ctx.font = '20px Dosis';
-        ctx.fillStyle = "white"
-        ctx.fillText(`${PLAYER.abilities.teleport.cooldownRemaining/1000} sec`, WIDTH * 0.47, HEIGHT * 0.948);
+        let details = PLAYER_ABILITIES[ability];
+
+        details.image.src = details.sheet;
+
+        if(details.cooldownRemaining == details.cooldown) 
+        {
+            ctx.fillStyle = "black";
+            ctx.drawImage(details.image, details.ui.x, details.ui.y, details.ui.w, details.ui.h);    
+        }
+        else
+        {
+            ctx.globalAlpha = 0.2;
+            ctx.drawImage(details.image, details.ui.x, details.ui.y, details.ui.w, details.ui.h);    
+            ctx.globalAlpha = 1;
+
+            ctx.font = '20px Dosis';
+            ctx.fillStyle = "white"
+            ctx.fillText(`${details.cooldownRemaining/1000} s`, details.ui.x+8,  details.ui.y + (details.ui.h/2) + 8);
+        };
     };
 };
 
